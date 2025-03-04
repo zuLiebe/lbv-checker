@@ -1,128 +1,72 @@
-# LBV Appointment Checker Bot 🤖
+# LBV Appointment Checker Bot
 
-[English](#english) | [Deutsch](#deutsch)
+Telegram бот для автоматической проверки доступных слотов записи в LBV (Landesamt für Bürger- und Ordnungsangelegenheiten) в Берлине.
 
-## English
+## Особенности
 
-An automated bot for monitoring available appointment slots on the LBV (Landesamt für Bürger- und Ordnungsangelegenheiten) website in Berlin, Germany.
+- Автоматическая проверка доступных слотов
+- Уведомления через Telegram при появлении свободных мест
+- Гибкая настройка интервала проверки
+- Подробное логирование
 
-### 🎯 Features
+## Требования
 
-- 🔍 Automatic monitoring of available appointment slots
-- 📅 Preferred date range selection (week/two weeks/month)
-- 🔔 Instant notifications when slots become available
-- 📸 Screenshots of available slots
-- 📊 Monitoring via Telegram bot
-- 📈 Grafana metrics visualization
+- Python 3.8+
+- Chrome/Chromium браузер
+- ChromeDriver
 
-### 🛠 Technologies
+## Установка
 
-- Python 3.12+
-- Selenium WebDriver
-- Telegram Bot API
-- SQLite
-- Prometheus + Grafana
-- Docker & Docker Compose
-
-### ⚙️ Installation
-
-1. Clone the repository:
+1. Клонируйте репозиторий:
 ```bash
-git clone https://github.com/yourusername/lbv-checker.git
-cd lbv-checker
+git clone https://github.com/yourusername/lbv-appointment-checker.git
+cd lbv-appointment-checker
 ```
 
-2. Create virtual environment and install dependencies:
+2. Установите зависимости:
 ```bash
-python -m venv venv
-source venv/bin/activate  # for Linux/Mac
-# or
-venv\Scripts\activate  # for Windows
 pip install -r requirements.txt
 ```
 
-3. Create `.env` file from template:
+3. Создайте файл `.env` в корневой директории проекта:
 ```bash
-cp .env.example .env
+BOT_TOKEN=your_telegram_bot_token
 ```
 
-4. Configure environment variables in `.env`:
-```env
-# Get token from @BotFather in Telegram
-TELEGRAM_TOKEN=your_bot_token_here
-USER_FIRSTNAME=your_firstname
-USER_LASTNAME=your_lastname
-USER_EMAIL=your_email@example.com
-```
+## Использование
 
-### 🚀 Launch
-
-#### Local launch
+1. Запустите бота:
 ```bash
-python start_bot.py
+python main.py
 ```
 
-#### Docker launch
-```bash
-docker-compose up -d
+2. В Telegram отправьте команду `/start` вашему боту
+
+3. Используйте следующие команды:
+- `/check` - начать проверку слотов
+- `/stop` - остановить проверку
+
+## Структура проекта
+
+```
+clean_version/
+├── bot/
+│   ├── __init__.py
+│   ├── bot.py
+│   └── browser.py
+├── config/
+│   ├── __init__.py
+│   └── config.py
+├── utils/
+│   ├── __init__.py
+│   └── logger.py
+├── tests/
+├── .env
+├── main.py
+├── requirements.txt
+└── README.md
 ```
 
-### 💡 Usage
+## Лицензия
 
-1. Find your bot in Telegram (using token from settings)
-2. Send `/start` command
-3. Choose preferred date range for monitoring
-4. Bot will start checking for available slots
-
-#### Available commands:
-- `/start` - start monitoring
-- `/stop` - stop monitoring
-- `/status` - check current status
-- `check` - perform one-time check
-
-### 🔍 How it works
-
-1. Bot automatically navigates to LBV website
-2. Goes through all steps until slot selection page
-3. Checks for "auswählen" buttons and associated dates
-4. If available slots are found:
-   - Within selected range: sends notification with sound
-   - Outside range: updates status message
-5. Takes screenshots for confirmation
-
-### 📊 Monitoring
-
-- All checks are logged in `logs/bot.log`
-- Metrics available through Prometheus
-- Visualization in Grafana (port 3000)
-
-### 🔐 Security
-
-- All sensitive data stored in `.env`
-- Allowed users list support
-- Secure token and credentials storage
-
-### ⚠️ Disclaimer
-
-This bot is intended for personal use and should not be used for automatic booking or creating load on the LBV website.
-
-## Deutsch
-
-[Original German description follows...]
-
-# 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Make changes and create PR
-
-# 📝 License
-
-MIT License. See [LICENSE](LICENSE) file.
-
-# 👥 Support
-
-If you have questions or issues:
-1. Create an Issue in repository
-2. Describe the problem in detail
-3. Attach logs from `logs/bot.log` 
+MIT 
