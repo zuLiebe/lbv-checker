@@ -3,18 +3,18 @@ import sys
 from ..config.config import Config
 
 def setup_logger():
-    """Настраивает логирование"""
-    # Удаляем стандартный обработчик
+    """Configure logging settings"""
+    # Remove default handler
     logger.remove()
     
-    # Добавляем новый обработчик с настроенным форматом
+    # Add new handler with configured format
     logger.add(
         sys.stderr,
         format=Config.LOG_FORMAT,
         level=Config.LOG_LEVEL
     )
     
-    # Добавляем файловый обработчик для записи логов в файл
+    # Add file handler for logging to file
     logger.add(
         "bot.log",
         rotation="1 day",

@@ -1,23 +1,23 @@
 import os
 from dotenv import load_dotenv
 
-# Загрузка переменных окружения
+# Load environment variables
 load_dotenv()
 
 class Config:
-    # Токен Telegram бота
+    # Telegram bot token
     BOT_TOKEN = os.getenv('BOT_TOKEN')
     
-    # Настройки браузера
+    # Browser settings
     BROWSER_HEADLESS = True
     BROWSER_TIMEOUT = 30
     
-    # URL для проверки
+    # Target URL for checking appointments
     TARGET_URL = "https://www.berlin.de/labo/mobil/dienstleistungen/termin/"
     
-    # Интервал проверки в секундах
+    # Check interval in seconds
     CHECK_INTERVAL = 60
     
-    # Настройки логирования
+    # Logging settings
     LOG_LEVEL = "INFO"
     LOG_FORMAT = "{time} {level} {message}" 

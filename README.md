@@ -1,52 +1,52 @@
 # LBV Appointment Checker Bot
 
-Telegram бот для автоматической проверки доступных слотов записи в LBV (Landesamt für Bürger- und Ordnungsangelegenheiten) в Берлине.
+A Telegram bot for automatically checking available appointment slots at LBV (Landesamt für Bürger- und Ordnungsangelegenheiten) in Berlin.
 
-## Особенности
+## Features
 
-- Автоматическая проверка доступных слотов
-- Уведомления через Telegram при появлении свободных мест
-- Гибкая настройка интервала проверки
-- Подробное логирование
+- Automatic monitoring of available appointment slots
+- Telegram notifications when slots become available
+- Flexible check interval configuration
+- Detailed logging
 
-## Требования
+## Requirements
 
 - Python 3.8+
-- Chrome/Chromium браузер
+- Chrome/Chromium browser
 - ChromeDriver
 
-## Установка
+## Installation
 
-1. Клонируйте репозиторий:
+1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/lbv-appointment-checker.git
 cd lbv-appointment-checker
 ```
 
-2. Установите зависимости:
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Создайте файл `.env` в корневой директории проекта:
+3. Create `.env` file in the project root:
 ```bash
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-## Использование
+## Usage
 
-1. Запустите бота:
+1. Start the bot:
 ```bash
 python main.py
 ```
 
-2. В Telegram отправьте команду `/start` вашему боту
+2. Send `/start` command to your bot in Telegram
 
-3. Используйте следующие команды:
-- `/check` - начать проверку слотов
-- `/stop` - остановить проверку
+3. Available commands:
+- `/check` - start checking for slots
+- `/stop` - stop checking
 
-## Структура проекта
+## Project Structure
 
 ```
 clean_version/
@@ -67,6 +67,6 @@ clean_version/
 └── README.md
 ```
 
-## Лицензия
+## License
 
 MIT 

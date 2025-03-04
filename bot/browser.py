@@ -14,7 +14,7 @@ class BrowserHandler:
         self.options = self._configure_options()
         
     def _configure_options(self):
-        """Настраивает опции браузера"""
+        """Configure browser options"""
         options = Options()
         if self.headless:
             options.add_argument('--headless=new')
@@ -28,57 +28,57 @@ class BrowserHandler:
         return options
     
     def init_driver(self):
-        """Инициализирует и возвращает драйвер Chrome"""
+        """Initialize and return Chrome driver"""
         try:
             driver = webdriver.Chrome(options=self.options)
             driver.implicitly_wait(self.timeout)
             return driver
         except Exception as e:
-            logger.error(f"Ошибка при инициализации Chrome драйвера: {e}")
+            logger.error(f"Error initializing Chrome driver: {e}")
             raise
     
     def close(self, driver):
-        """Закрывает браузер"""
+        """Close the browser"""
         if driver:
             try:
                 driver.quit()
             except Exception as e:
-                logger.error(f"Ошибка при закрытии браузера: {e}")
+                logger.error(f"Error closing browser: {e}")
     
     def safe_click(self, driver, element):
-        """Безопасный клик по элементу"""
+        """Safe click on element"""
         try:
-            # Прямой клик
+            # Direct click
             try:
                 element.click()
                 return True
             except:
                 pass
             
-            # Скролл и клик
+            # Scroll and click
             driver.execute_script("arguments[0].scrollIntoView(true);", element)
             time.sleep(0.5)
             element.click()
             return True
             
         except Exception as e:
-            logger.error(f"Ошибка при клике: {e}")
+            logger.error(f"Error clicking element: {e}")
             return False
     
     def check_slots(self, driver, chat_ids=None):
-        """Проверяет наличие доступных слотов"""
+        """Check for available slots"""
         try:
-            # Проверяем наличие кнопок выбора (auswählen)
+            # Check for select buttons (auswählen)
             select_buttons = driver.find_elements(By.XPATH, "//button[contains(text(), 'auswählen')]")
             clickable_buttons = []
             available_dates = []
 
-            # Проверяем каждую кнопку на возможность нажатия
+            # Check each button for clickability
             for button in select_buttons:
                 try:
                     if button.is_displayed() and button.is_enabled():
                         clickable_buttons.append(button)
-                        # Ищем связанную дату
+                        # Find associated date
                         parent = button.find_element(By.XPATH, "./ancestor::tr")
                         date_element = parent.find_element(By.XPATH, ".//div[contains(text(), 'Termine verfügbar ab')]")
                         date_text = date_element.text.strip()
@@ -87,16 +87,16 @@ class BrowserHandler:
                         if date_match:
                             available_dates.append(date_match.group(1))
                 except Exception as e:
-                    logger.error(f"Ошибка при проверке кнопки: {e}")
+                    logger.error(f"Error checking button: {e}")
                     continue
 
             if clickable_buttons:
                 if available_dates:
-                    return True, f"Доступна запись на даты: {', '.join(available_dates)}"
-                return True, f"Найдено {len(clickable_buttons)} доступных слотов"
+                    return True, f"Available dates: {', '.join(available_dates)}"
+                return True, f"Found {len(clickable_buttons)} available slots"
             
-            return False, "Нет доступных слотов"
+            return False, "No available slots"
             
         except Exception as e:
-            logger.error(f"Ошибка при проверке слотов: {e}")
-            return False, f"Ошибка: {str(e)}" 
+            logger.error(f"Error checking slots: {e}")
+            return False, f"Error: {str(e)}" 
