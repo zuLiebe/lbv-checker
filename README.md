@@ -1,6 +1,6 @@
 # LBV Appointment Checker Bot
 
-A Telegram bot for automatically checking available appointment slots at LBV (Landesamt für Bürger- und Ordnungsangelegenheiten) in Berlin.
+A Telegram bot for automatically checking available appointment slots at LBV (Landesamt für Bürger- und Ordnungsangelegenheiten) in Hamburg.
 
 ## Features
 
