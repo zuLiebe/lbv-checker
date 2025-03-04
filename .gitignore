@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs
+logs/
+*.log
+
+# Database
+database/
+*.db
+*.sqlite3
+
+# Environment variables and sensitive data
+.env
+.env.*
+*.pem
+*.key
+telegram_users.json
+last_message_ids.json
+booking_history.json
+last_notification.json
+
+# Docker volumes
+prometheus_data/
+grafana_data/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Screenshots and temporary files
+current_state.png
+error_state.png 

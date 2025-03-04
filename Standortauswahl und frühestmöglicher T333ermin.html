@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://lbv-termine.de/frontend/standortauswahl.php -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Standortauswahl und frühestmöglicher Termin</title>
+  <meta name="description" content="Standortauswahl und frühestmöglicher Termin">
+<!-- html head -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./Standortauswahl und frühestmöglicher T333ermin_files/style.css">
+<script src="./Standortauswahl und frühestmöglicher T333ermin_files/utils.js"></script>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="./Standortauswahl und frühestmöglicher T333ermin_files/bootstrap.min.css">
+
+<script src="./Standortauswahl und frühestmöglicher T333ermin_files/jquery-3.6.1.min.js"></script>
+<script src="./Standortauswahl und frühestmöglicher T333ermin_files/bootstrap.bundle.min.js"></script>
+<!-- Captcha --> 
+<script src="./Standortauswahl und frühestmöglicher T333ermin_files/power-captcha-1.2.2.min.js" type="text/javascript"></script>
+
+<link href="./Standortauswahl und frühestmöglicher T333ermin_files/fontawesome.css" rel="stylesheet">
+<link href="./Standortauswahl und frühestmöglicher T333ermin_files/brands.css" rel="stylesheet">
+<link href="./Standortauswahl und frühestmöglicher T333ermin_files/solid.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="./Standortauswahl und frühestmöglicher T333ermin_files/leaflet.css">
+<script src="./Standortauswahl und frühestmöglicher T333ermin_files/leaflet.js"></script>
+<script src="./Standortauswahl und frühestmöglicher T333ermin_files/geosearch.umd.js"></script>
+<!--
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+-->
+<script>
+
+
+  function setMap()
+  {
+    var osm_map = L.map('mapid').setView([53.59, 10.06], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	  	attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+	  }).addTo(osm_map);
+/*
+    var markerLBVNord = L.marker([53.6682, 10.00138]).addTo(osm_map);
+    var markerLBVWest = L.marker([53.57869, 9.91763]).addTo(osm_map);
+    var markerLBVMitte = L.marker([53.55165, 10.04146]).addTo(osm_map);
+    var markerLBVBergedorf = L.marker([53.49051, 10.20258]).addTo(osm_map)
+    var markerLBVHarburg = L.marker([53.46506, 10.00570]).addTo(osm_map)
+*/
+    // Popup
+//    markerLBVHarburg.bindPopup('LBV Harburg.').openPopup();
+//    markerLBVBergedorf.bindPopup('LBV Bergedorf.').openPopup();
+//    markerLBVMitte.bindPopup('LBV Mitte.').openPopup();
+//    markerLBVWest.bindPopup('LBV West.').openPopup();
+//    markerLBVNord.bindPopup('LBV Nord.').openPopup();
+/*
+    // Tooltip
+    markerLBVHarburg.bindTooltip("LBV Harburg", { permanent: true, direction: 'right' });
+    markerLBVBergedorf.bindTooltip("LBV Bergedorf", { permanent: true, direction: 'right' });
+    markerLBVMitte.bindTooltip("LBV Mitte", { permanent: true, direction: 'right' })
+    markerLBVWest.bindTooltip("LBV West", { permanent: true, direction: 'right' });
+    markerLBVNord.bindTooltip("LBV Nord", { permanent: true, direction: 'right' });
+*/
+
+    // Get the provider, in this case the OpenStreetMap (OSM) provider. For some reason, this is the "wrong" way to instanciate it. Instead, we should be using an import "leaflet-geosearch" but I coulnd't make that work
+    const provider = new GeoSearch.OpenStreetMapProvider()
+    var query_promise = new Array();
+    var marker = new Array();
+query_promise[0] = provider.search({
+               query: "Süderstraße 142, 20537 Hamburg"
+            });query_promise[0].then(value => {
+              for (i = 0; i < value.length; i++) {
+                // Success!
+                var x_coor = value[i].x;
+                var y_coor = value[i].y;
+                var label = value[i].label;
+                marker[0] = L.marker([y_coor, x_coor]).addTo(osm_map)
+                //marker[0].bindPopup('<b>Found location</b><br>' + label).openPopup();
+                marker[0].bindTooltip('LBV Mitte Führerschein', { permanent: true, direction: 'right' });
+              };
+            }, reason => {
+              console.log(reason); // Error!
+            });query_promise[1] = provider.search({
+               query: "Langenhorner Chaussee 491, 22419 Hamburg"
+            });query_promise[1].then(value => {
+              for (i = 0; i < value.length; i++) {
+                // Success!
+                var x_coor = value[i].x;
+                var y_coor = value[i].y;
+                var label = value[i].label;
+                marker[1] = L.marker([y_coor, x_coor]).addTo(osm_map)
+                //marker[1].bindPopup('<b>Found location</b><br>' + label).openPopup();
+                marker[1].bindTooltip('LBV Nord Führerschein', { permanent: true, direction: 'right' });
+              };
+            }, reason => {
+              console.log(reason); // Error!
+            });  }
+
+
+</script>
+<style>div[id^=powercaptcha]{all:revert}div[id^=powercaptcha] *,div[id^=powercaptcha] *:hover,div[id^=powercaptcha] *:focus,div[id^=powercaptcha] *::after,div[id^=powercaptcha] *::before{all:revert;box-sizing:border-box}div[id^=powercaptcha].pc-hidden,div[id^=powercaptcha] .pc-hidden{display:none !important}div[id^=powercaptcha].pc-widget{font-family:var(--pc-widget-font-family, var(--pc-font-family, Arial, sans-serif));font-size:var(--pc-widget-font-size, var(--pc-font-size, 16px));display:flex;justify-content:space-between;overflow:hidden;max-width:var(--pc-widget-max-width, 260px)}div[id^=powercaptcha].pc-widget .pc-widget-content{display:flex;align-items:center;flex-wrap:nowrap;column-gap:var(--pc-widget-content-column-gap, 10px);padding:var(--pc-widget-content-padding, 5px 10px);background-color:var(--pc-widget-content-bg-color, var(--pc-widget-bg-color, #fff));width:100%;position:relative;border-top-color:var(--pc-widget-border-color, #b6b6b6);border-top-style:var(--pc-widget-border-style, solid);border-top-width:var(--pc-widget-border-width, 1px);border-left-color:var(--pc-widget-border-color, #b6b6b6);border-left-style:var(--pc-widget-border-style, solid);border-left-width:var(--pc-widget-border-width, 1px);border-bottom-color:var(--pc-widget-border-color, #b6b6b6);border-bottom-style:var(--pc-widget-border-style, solid);border-bottom-width:var(--pc-widget-border-width, 1px);border-top-left-radius:var(--pc-widget-border-top-left-radius, var(--pc-widget-border-radius, 5px));border-bottom-left-radius:var(--pc-widget-border-bottom-left-radius, var(--pc-widget-border-radius, 5px))}div[id^=powercaptcha].pc-widget .pc-widget-checkbox{flex:0 0 var(--pc-widget-checkbox-size, 1.5em)}div[id^=powercaptcha].pc-widget .pc-widget-checkbox-initial,div[id^=powercaptcha].pc-widget .pc-widget-checkbox-spinner,div[id^=powercaptcha].pc-widget .pc-widget-checkbox-complete{display:none}div[id^=powercaptcha].pc-widget.pc-initial .pc-widget-checkbox-initial{display:block;width:var(--pc-widget-checkbox-size, 1.5em);height:var(--pc-widget-checkbox-size, 1.5em);background-color:var(--pc-widget-checkbox-color, #fff);border-width:var(--pc-widget-checkbox-border-width, 1px);border-style:var(--pc-widget-checkbox-border-style, solid);border-color:var(--pc-widget-checkbox-border-color, #b6b6b6);border-radius:var(--pc-widget-checkbox-border-radius, 5px);margin:calc(var(--pc-widget-checkbox-border-width, 1px) * -1);cursor:pointer}div[id^=powercaptcha].pc-widget.pc-initial .pc-widget-checkbox-initial:hover{background-color:var(--pc-widget-checkbox-hover-color, #b6b6b6)}div[id^=powercaptcha].pc-widget.pc-invalid .pc-widget-checkbox-initial{border-color:var(--pc-widget-checkbox-invalid-border-color, #a94442);border-width:var(--pc-widget-checkbox-invalid-border-width, 3px);margin:calc(var(--pc-widget-checkbox-invalid-border-width, 3px) * -1);animation:blink 750ms 2}@keyframes blink{0%,49%{border-width:var(--pc-widget-checkbox-border-width, 1px);border-color:var(--pc-widget-checkbox-border-color, #b6b6b6);margin:calc(var(--pc-widget-checkbox-border-width, 1px) * -1)}50%{border-width:var(--pc-widget-checkbox-invalid-border-width, 3px);border-color:var(--pc-widget-checkbox-invalid-border-color, #a94442);margin:calc(var(--pc-widget-checkbox-invalid-border-width, 3px) * -1)}}div[id^=powercaptcha].pc-widget.pc-error .pc-widget-checkbox-complete,div[id^=powercaptcha].pc-widget.pc-complete .pc-widget-checkbox-complete{display:block;width:var(--pc-widget-checkbox-size, 1.5em);height:var(--pc-widget-checkbox-size, 1.5em)}div[id^=powercaptcha].pc-widget.pc-loading .pc-widget-spinner{display:block;width:var(--pc-widget-checkbox-size, 1.5em);height:var(--pc-widget-checkbox-size, 1.5em);position:relative}div[id^=powercaptcha].pc-widget.pc-loading .pc-widget-spinner::after,div[id^=powercaptcha].pc-widget.pc-loading .pc-widget-spinner::before{content:"";box-sizing:border-box;width:var(--pc-widget-checkbox-size, 1.5em);height:var(--pc-widget-checkbox-size, 1.5em);border-radius:50%;border:2px solid var(--pc-widget-spinner-color, #6a6a6a);position:absolute;left:0;top:0;animation:spinner 2s linear infinite}div[id^=powercaptcha].pc-widget.pc-loading .pc-widget-spinner::after{animation-delay:1s}@keyframes spinner{0%{transform:scale(0);opacity:1}100%{transform:scale(1);opacity:0}}div[id^=powercaptcha].pc-widget .pc-widget-text{flex:1 1 auto;font-family:var(--pc-widget-font-family, var(--pc-font-family, Arial, sans-serif));font-size:var(--pc-widget-font-size, var(--pc-font-size, 16px));color:var(--pc-widget-font-color, #6a6a6a);line-height:normal;letter-spacing:normal}div[id^=powercaptcha].pc-widget .pc-widget-brand{position:absolute;padding:var(--pc-widget-brand-padding, 2px 5px);bottom:0;right:0;font-size:var(--pc-widget-brand-font-size, 0.55em);color:var(--pc-widget-font-color, #6a6a6a);line-height:normal;letter-spacing:normal}div[id^=powercaptcha].pc-widget .pc-widget-brand .pc-widget-brand-link{color:var(--pc-widget-font-color, #6a6a6a);text-decoration:none}div[id^=powercaptcha].pc-widget .pc-widget-brand .pc-widget-brand-link:hover{color:var(--pc-widget-font-color, #6a6a6a);text-decoration:underline}div[id^=powercaptcha].pc-widget .pc-widget-logo{display:flex;background-color:var(--pc-widget-logo-bg-color, var(--pc-widget-bg-color, #fff));padding:var(--pc-widget-logo-padding, 5px);border-top-color:var(--pc-widget-border-color, #b6b6b6);border-top-style:var(--pc-widget-border-style, solid);border-top-width:var(--pc-widget-border-width, 1px);border-right-color:var(--pc-widget-border-color, #b6b6b6);border-right-style:var(--pc-widget-border-style, solid);border-right-width:var(--pc-widget-border-width, 1px);border-bottom-color:var(--pc-widget-border-color, #b6b6b6);border-bottom-style:var(--pc-widget-border-style, solid);border-bottom-width:var(--pc-widget-border-width, 1px);border-top-right-radius:var(--pc-widget-border-top-right-radius, var(--pc-widget-border-radius, 5px));border-bottom-right-radius:var(--pc-widget-border-bottom-right-radius, var(--pc-widget-border-radius, 5px))}div[id^=powercaptcha].pc-modal{font-family:var(--pc-modal-font-family, var(--pc-font-family, Arial, sans-serif));font-size:var(--pc-modal-font-size, var(--pc-font-size, 16px));position:fixed;width:100%;height:100%;top:0;right:0;bottom:0;left:0;display:flex;justify-content:center;align-items:center;pointer-events:all;overflow-x:hidden;overflow-y:auto;z-index:1050;background-color:var(--pc-modal-curtain-color, rgba(0, 0, 0, 0.5))}div[id^=powercaptcha].pc-modal .pc-modal-window{position:relative;width:auto;margin:auto;padding:var(--pc-modal-padding-y, calc(var(--pc-modal-spacing, 20px) * 2)) var(--pc-modal-padding-x, var(--pc-modal-spacing, 20px));background-color:var(--pc-modal-bg-color, #fff);border-radius:var(--pc-modal-border-radius, 5px);color:var(--pc-modal-font-color, #6a6a6a)}@media(min-width: 768px){div[id^=powercaptcha].pc-modal .pc-modal-window{max-width:700px}}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-header{height:var(--pc-modal-header-height, 80px);display:flex;align-items:center;margin-bottom:var(--pc-modal-spacing, 20px)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-header .pc-icon{width:.7em;margin-right:var(--pc-modal-spacing, 20px);color:#000;filter:var(--pc-color-filter-light, invert(79%) sepia(0%) saturate(0%) hue-rotate(177deg) brightness(94%) contrast(89%))}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-header .pc-modal-title{color:var(--pc-modal-header-color, #b6b6b6);border:var(--pc-modal-header-border, 1px solid #b6b6b6);border-radius:var(--pc-modal-border-radius, 5px);font-size:var(--pc-modal-header-font-size, 30px);font-weight:600;display:flex;align-items:center;justify-content:center;width:100%;height:100%}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-header .pc-modal-eye-catcher{position:absolute;height:calc(var(--pc-modal-header-height, 80px) + var(--pc-modal-header-logo-offset, 10px));border:var(--pc-modal-header-border, 1px solid #b6b6b6);border-radius:var(--pc-modal-border-radius, 5px);padding:var(--pc-modal-spacing, 20px);background-color:var(--pc-modal-bg-color, #fff)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-header .pc-modal-eye-catcher .pc-modal-logo{height:100%;width:auto}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-security-message{text-align:center;align-self:center;padding:var(--pc-modal-alert-padding, 8px !important);border-radius:var(--pc-modal-alert-border-radius, var(--pc-modal-border-radius, 5px));max-width:400px}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-security-message.pc-alert-danger{color:var(--pc-modal-alert-danger-color, #a94442);background-color:var(--pc-modal-alert-danger-bg-color, #f2dede);border-color:var(--pc-modal-alert-danger-color, #a94442)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-security-message.pc-alert-success{color:var(--pc-modal-alert-success-color, #3c763d);background-color:var(--pc-modal-alert-success-bg-color, #dff0d8);border-color:var(--pc-modal-alert-success-color, #3c763d)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-intro-top{font-size:var(--pc-modal-intro-font-size, 20px)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-intro{font-size:var(--pc-modal-font-size)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-intro .pc-icon{max-height:1em;color:#000;filter:var(--pc-color-filter-dark, invert(43%) sepia(18%) saturate(38%) hue-rotate(329deg) brightness(91%) contrast(88%))}div[id^=powercaptcha].pc-modal .pc-modal-window p:not(:last-child){margin:var(--pc-modal-paragraph-margin, 0 0 10px 0)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-icon{width:var(--pc-modal-icon-size, 20px);height:var(--pc-modal-icon-size, 20px);display:inline-block;vertical-align:middle}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn{display:inline-block;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;font-size:inherit;margin:0;background:none;border:none;border-radius:var(--pc-modal-btn-border-radius, var(--pc-modal-border-radius, 5px))}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn>span{white-space:normal}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn-nav{color:#000;filter:var(--pc-color-filter-dark, invert(43%) sepia(18%) saturate(38%) hue-rotate(329deg) brightness(91%) contrast(88%))}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn-nav:hover{background:inherit;color:#000;filter:var(--pc-color-filter-light, invert(79%) sepia(0%) saturate(0%) hue-rotate(177deg) brightness(94%) contrast(89%))}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn-nav-inverted{color:#000;filter:var(--pc-color-filter-light, invert(79%) sepia(0%) saturate(0%) hue-rotate(177deg) brightness(94%) contrast(89%))}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn-nav-inverted:hover{color:#000;filter:var(--pc-color-filter-dark, invert(43%) sepia(18%) saturate(38%) hue-rotate(329deg) brightness(91%) contrast(88%))}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn-primary{color:var(--pc-modal-btn-primary-color, #fff);background-color:var(--pc-modal-btn-primary-bg-color, #0d6efd);border:var(--pc-modal-btn-primary-border, none)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn-primary:hover{color:var(--pc-modal-btn-primary-color, #fff);background-color:var(--pc-modal-btn-primary-hover-bg-color, #408cfd);border:var(--pc-modal-btn-primary-hover-border, none)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn-success{color:var(--pc-modal-btn-success-color, #fff);background-color:var(--pc-modal-btn-success-bg-color, #3c763d);border:var(--pc-modal-btn-success-border, none)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-btn-success:hover{color:var(--pc-modal-btn-success-color, #fff);background-color:var(--pc-modal-btn-success-hover-bg-color, #4d984e);border:var(--pc-modal-btn-success-hover-border, none)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body{padding-left:var(--pc-modal-body-padding-y, var(--pc-modal-spacing, 20px));padding-right:var(--pc-modal-body-padding-y, var(--pc-modal-spacing, 20px));display:flex;flex-direction:column;text-align:left}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-security-container{height:auto;width:100%;cursor:pointer;border-radius:var(--pc-modal-border-radius, 5px)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-form{display:flex;flex-direction:column}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-form .pc-input,div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-form .pc-btn{padding:var(--pc-modal-form-element-padding, 6px 12px);font-size:inherit;line-height:var(--pc-modal-form-element-line-height, 1.5em);border-radius:var(--pc-modal-form-element-border-radius, var(--pc-modal-btn-border-radius, var(--pc-modal-border-radius, 5px)));box-shadow:var(--pc-modal-form-element-box-shadow, inset 0 1px 1px rgba(0, 0, 0, 0.075));-webkit-box-shadow:var(--pc-modal-form-element-box-shadow, inset 0 1px 1px rgba(0, 0, 0, 0.075));transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;-webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-form .pc-input{color:inherit;background-color:inherit;border:var(--pc-modal-form-input-border, 1px solid #b6b6b6)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-form .pc-input:not(:last-child){margin:var(--pc-modal-paragraph-margin, 0 0 10px 0)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-form .pc-input:focus{border:var(--pc-modal-form-input-foucus-border, 1px solid #6a6a6a)}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-form .pc-code-input{-moz-appearance:textfield}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-body .pc-form .pc-btn{max-width:fit-content;align-self:flex-end}div[id^=powercaptcha].pc-modal .pc-modal-window .pc-modal-footer{display:flex;justify-content:space-between;margin-top:var(--pc-modal-spacing, 20px);gap:var(--pc-modal-spacing, 20px)}
+</style></head>
+
+<body class="container-fluid maxpagewidth bg-secondary limit-width bg-white mb-6" onload="setMap();">
+
+
+<!-- Headerzeile -->
+<div class="header noprint">
+  <div class="visible">
+    <a href="https://www.hamburg.de/lbv" target="_blank"><img class="logo" src="./Standortauswahl und frühestmöglicher T333ermin_files/HHSP.svg" alt="Logo Hansestadt Hamburg"></a>
+    <span class="logo_text">Landesbetrieb Verkehr <b>TERMINVEREINBARUNG</b></span>
+    <img class="logo" src="./Standortauswahl und frühestmöglicher T333ermin_files/logo_lbv.png" alt="Logo Landesbetrieb Verkehr">
+          <div class="languageselect">
+        <div class="sprachwahlperflagge"> <!--
+                      <a href="/frontend/standortauswahl.php?language=de" tabindex="0"><img src="./img/deutschland.gif" alt="Sprachauswahl Deutsch." width="25"></a>
+                               -->
+        </div>
+      </div>
+        <div class="logo__bug visible"></div>
+  </div>
+</div>
+<!-- Ende Headerzeile -->
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-lbv-blue">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+            <li class="nav-item ">
+        <a class="nav-link LBV-start-button" href="https://lbv-termine.de/frontend/index.php" tabindex="0">Start</a>
+      </li>
+              <li class="nav-item ">
+          <a class="nav-link LBV-start-button" href="https://lbv-termine.de/frontend/dienstleistungsauswahl.php" tabindex="0">Dienstleistungsauswahl</a>
+        </li>
+              <li class="nav-item ">
+          <a class="nav-link LBV-start-button" href="https://lbv-termine.de/frontend/kontaktdaten.php" tabindex="0">Für wen wird der Termin gebucht?</a>
+        </li>
+          </ul>
+    <!--      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link LBV-start-button" href="#" tabindex="0" onclick="setContent('helpcontent', '&lt;strong&gt;Mit folgenden Schritten buchen Sie einen Termin:&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;1. Kategorieauswahl:&lt;/strong&gt; W&amp;auml;hlen Sie eine Kategorie aus.&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;2. Dienstleistungsauswahl:&lt;/strong&gt; W&amp;auml;hlen Sie eine Dienstleistung aus.&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;3. Datenschutzerkl&amp;auml;rung:&lt;/strong&gt; Lesen Sie die Datenschutzerkl&amp;auml;rung und best&amp;auml;tigen Sie diese.&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;4. &amp;Uuml;ber mich:&lt;/strong&gt; Geben Sie Ihre pers&amp;ouml;nlichen Daten ein.&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;5. Standortauswahl:&lt;/strong&gt; W&amp;auml;hlen Sie einen Standort aus.&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;6. Terminauswahl:&lt;/strong&gt; W&amp;auml;hlen Sie einen Termin aus.&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;7. Bitte best&amp;auml;tigen Sie Ihren Termin:&lt;/strong&gt; Je nach Dienstleistung bekommen Sie eine Mail oder eine SMS mit einem Abfragecode. &lt;strong&gt;Schlie&amp;szlig;en Sie noch nicht den Browser, Ihr Termin ist noch nicht f&amp;uuml;r Sie fixiert!&lt;/strong&gt; Erst, wenn Sie den Link auf der Mail bzw. den Code aus der SMS in unser Buchungssystem &amp;uuml;bertragen haben, wird Ihr Termin gespeichert.&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;Ihr Termin wurde erfolgreich best&amp;auml;tigt&lt;/strong&gt; Wenn Sie diese Seite sehen, ist Ihr Termin best&amp;auml;tigt und Ihnen werden die ben&amp;ouml;tigten Unterlagen und weitere Hinweise angezeigt.');togglemodal('help');jump('help');">Ablauf Terminbuchung</a>
+        </li>
+      </ul>
+-->      
+    
+  </div>
+</nav>
+
+
+<div id="content" class="container-fluid p-0 m-0">
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+
+<p class="mt-3 ml-3">
+<button class="btn LBV-backbutton" onclick="callURL(&#39;kontaktdaten.php&#39;);"><span class="text-danger font-weight-bold">‹</span> zurück</button>
+</p>
+
+<!-- Breadcrump -->
+<div id="breadcrump" class="container-fluid clearfix align-middle pt-2 bluetext LBV-breadcrump d-none">
+  Standortauswahl und frühestmöglicher Termin&nbsp;−&nbsp;Schritt 5 von 7      &nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/help.svg" alt="help-icon" class="help_icon mb-1" tabindex="0" onclick="setContent(&#39;helpcontent&#39;, &#39;W&amp;auml;hlen Sie hier einen Standort aus, bei dem Sie den Termin w&amp;uuml;nschen.&#39;);togglemodal(&#39;help&#39;);jump(&#39;help&#39;);">
+  </div>
+<!-- choice -->
+<div class="container-fluid clearfix align-middle pt-2 bluetext">
+  <b>Ihre aktuelle Auswahl:&nbsp; 
+  Umschreibung ausländischer Führerschein oder Dienstführerschein in befristeten EU-Kartenführerschein</b><br>&nbsp;
+</div>
+
+
+        <div class="LBV-aboutme">
+  <!-- sample full width-->
+          <div class="container-fluid clearfix align-middle pt-2">
+            <h1 class="LBV-mainheadline bluetext">Standortauswahl und frühestmöglicher Termin</h1>
+
+            <p class="LBV-dlgruppentext">Standortsortierung nach frühestmöglichem Termin</p>
+
+            <!-- error_message -->
+              
+
+            <!-- custom  message -->
+                      </div>
+
+
+
+  <!-- sample two cplumns -->
+          <div class="container">
+            <div class="row">
+              <div class="col-sm LBV-dlgruppentext">
+
+
+                        <div class="card bg-lightgrey mb-3 border-0">
+                        <div class="card-body">
+  <div class="float-left"><b><a href="https://lbv-termine.de/frontend/terminauswahl.php?standortid=109" tabindex="0">LBV Mitte Führerschein</a></b></div><div class="float-right">&nbsp;&nbsp;&nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/help.svg" alt="Hilfe" class="help_icon" tabindex="0" onclick="setContent(&#39;helpcontent&#39;, &#39;&lt;b&gt;LBV Mitte Führerschein&lt;/b&gt;&lt;br&gt;Süderstraße 142&lt;br&gt; 20537 Hamburg&lt;br&gt; &lt;br&gt;&lt;p&gt;Bringen Sie diese &lt;strong&gt;Terminbestätigung (PDF) &lt;/strong&gt;ausgedruckt oder in elektronischer Form (z. B. auf Ihrem Mobiltelefon) zu Ihrem Termin mit. Ohne Aufrufnummer und QR-Code ist eine Bearbeitung nicht möglich!&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;Sie müssen bei Ankunft den QR-Code Ihrer Terminbestätigung (PDF) einscannen&lt;/strong&gt;, da Sie ansonsten nicht aufgerufen werden können. Dies ist frühestens 15 Minuten vor Terminbeginn möglich. Andernfalls kann Ihr Termin nicht aufgerufen werden. Gehen Sie bitte nach dem Einscannen in den Wartebereich im &lt;strong&gt;Haus D/2. Stock&lt;/strong&gt;. Beobachten Sie die Aufrufanzeige.&lt;br /&gt;&lt;br /&gt;Der Termin ist nur zur angegebenen Uhrzeit am gebuchten Datum und in dem genannten Standort gültig. Erscheinen Sie daher bitte pünktlich am oben genannten Ort, anderenfalls verfällt der Termin.&lt;br /&gt;&lt;br /&gt;&lt;strong&gt;Achtung:&lt;/strong&gt; eingeschränktes Parkplatzangebot, nutzen Sie bitte öffentliche Verkehrsmittel (HVV Linien 25, 112,154,160).&lt;/p&gt;&lt;br&gt;&#39;);togglemodal(&#39;help&#39;);jump(&#39;help&#39;);">&nbsp;&nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/kartenzahlung.svg" title="EC-Kartenzahlung möglich">&nbsp;&nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/rollstuhlgerecht.svg" title="rollstuhlgerecht">&nbsp;&nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/fotobox.svg" title="Fotobox vorhanden"></div><div class="clear-both">Termine verfügbar ab 28.04.2025</div><div class="clear-both "><br>Eine Wahrnehmung des Termins&nbsp;<span style="color: #ff0000;">mit Vollmacht ist nicht möglich</span>. Ausnahme: Internationaler Führerschein.<br><br>Bei doppelt gebuchten Terminen für dieselbe Person und Dienstleistung <strong>wird der zuerst gebuchte Termin seitens des LBV storniert</strong>.<div>&nbsp;</div></div><div class="clear-both ">Sie können Termine bis zu 56 Tage im Voraus buchen.</div> <button class="btn LBV-choosebutton right-1" onclick="callURL(&#39;terminauswahl.php?standortid=109&#39;);" tabindex="0">auswählen </button>
+                        </div>
+                      </div>
+                        <div class="card bg-lightgrey mb-3 border-0">
+                        <div class="card-body">
+  <div class="float-left"><b><a href="https://lbv-termine.de/frontend/terminauswahl.php?standortid=112" tabindex="0">LBV Nord Führerschein</a></b></div><div class="float-right">&nbsp;&nbsp;&nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/help.svg" alt="Hilfe" class="help_icon" tabindex="0" onclick="setContent(&#39;helpcontent&#39;, &#39;&lt;b&gt;LBV Nord Führerschein&lt;/b&gt;&lt;br&gt;Langenhorner Chaussee 491&lt;br&gt; 22419 Hamburg&lt;br&gt; &lt;br&gt;&lt;p&gt;Bringen Sie diese &lt;strong&gt;Terminbestätigung (PDF) &lt;/strong&gt;ausgedruckt oder in elektronischer Form (z. B. auf Ihrem Mobiltelefon) zu Ihrem Termin mit. Ohne Aufrufnummer und QR-Code ist eine Bearbeitung nicht möglich!&lt;br /&gt;&lt;strong&gt;&lt;br /&gt;Sie müssen bei Ankunft den QR-Code Ihrer Terminbestätigung (PDF) einscannen&lt;/strong&gt;, da Sie ansonsten nicht aufgerufen werden können. Dies ist frühestens 15 Minuten vor Terminbeginn möglich. Andernfalls kann Ihr Termin nicht aufgerufen werden. Gehen Sie bitte nach dem Einscannen in den Wartebereich. Beobachten Sie die Aufrufanzeige.&lt;br /&gt;&lt;br /&gt;Der Termin ist nur zur angegebenen Uhrzeit am gebuchten Datum und in dem genannten Standort gültig. Erscheinen Sie daher bitte pünktlich am oben genannten Ort, anderenfalls verfällt der Termin.&lt;/p&gt;&lt;br&gt;&#39;);togglemodal(&#39;help&#39;);jump(&#39;help&#39;);">&nbsp;&nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/kartenzahlung.svg" title="EC-Kartenzahlung möglich">&nbsp;&nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/rollstuhlgerecht.svg" title="rollstuhlgerecht">&nbsp;&nbsp;<img src="./Standortauswahl und frühestmöglicher T333ermin_files/fotobox.svg" title="Fotobox vorhanden"></div><div class="clear-both">Termine verfügbar ab 28.04.2025</div><div class="clear-both "><br>Eine Wahrnehmung des Termins&nbsp;<span style="color: #ff0000;">mit Vollmacht ist nicht möglich</span>. Ausnahme: Internationaler Führerschein.<br><br>Bitte beachten Sie, dass für die Zahlung der Gebühren vor Ort ausschließlich <strong>Kartenzahlung</strong> möglich ist. Barzahlung ist nicht möglich.<br><br>Bei doppelt gebuchten Terminen für dieselbe Person und Dienstleistung <strong>wird der zuerst gebuchte Termin seitens des LBV storniert</strong>.<div>&nbsp;</div></div><div class="clear-both ">Sie können Termine bis zu 56 Tage im Voraus buchen.</div> <button class="btn LBV-choosebutton right-1" onclick="callURL(&#39;terminauswahl.php?standortid=112&#39;);" tabindex="0">auswählen </button>
+                        </div>
+                      </div>
+                  
+              </div>
+              <div class="col-sm LBV-dlgruppentext pb-3">
+              <div id="mapid" class="cursor-default leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" src="./Standortauswahl und frühestmöglicher T333ermin_files/330.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(43px, -35px, 0px); opacity: 1;"><img alt="" src="./Standortauswahl und frühestmöglicher T333ermin_files/331.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(43px, 221px, 0px); opacity: 1;"><img alt="" src="./Standortauswahl und frühestmöglicher T333ermin_files/330(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-213px, -35px, 0px); opacity: 1;"><img alt="" src="./Standortauswahl und frühestmöglicher T333ermin_files/330(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(299px, -35px, 0px); opacity: 1;"><img alt="" src="./Standortauswahl und frühestmöglicher T333ermin_files/331(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-213px, 221px, 0px); opacity: 1;"><img alt="" src="./Standortauswahl und frühestmöglicher T333ermin_files/331(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(299px, 221px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-shadow-pane"><img src="./Standortauswahl und frühestmöglicher T333ermin_files/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(184px, 213px, 0px);"><img src="./Standortauswahl und frühestmöglicher T333ermin_files/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(158px, 64px, 0px);"></div><div class="leaflet-pane leaflet-marker-pane"><img src="./Standortauswahl und frühestmöglicher T333ermin_files/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="Marker" tabindex="0" role="button" aria-describedby="leaflet-tooltip-41" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(184px, 213px, 0px); z-index: 213; cursor: default;"><img src="./Standortauswahl und frühestmöglicher T333ermin_files/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="Marker" tabindex="0" role="button" aria-describedby="leaflet-tooltip-44" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(158px, 64px, 0px); z-index: 64; cursor: default;"></div><div class="leaflet-pane leaflet-tooltip-pane"><div class="leaflet-tooltip leaflet-zoom-animated leaflet-tooltip-right" role="tooltip" id="leaflet-tooltip-41" style="opacity: 0.9; transform: translate3d(200px, 169px, 0px);">LBV Mitte Führerschein</div><div class="leaflet-tooltip leaflet-zoom-animated leaflet-tooltip-right" role="tooltip" id="leaflet-tooltip-44" style="opacity: 0.9; transform: translate3d(174px, 20px, 0px);">LBV Nord Führerschein</div></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(138397px, 84675.1px, 0px) scale(512);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="https://lbv-termine.de/frontend/standortauswahl.php#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="https://lbv-termine.de/frontend/standortauswahl.php#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="https://leafletjs.com/" title="A JavaScript library for interactive maps"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"></path><path fill="#FFD500" d="M0 4h12v3H0z"></path><path fill="#E0BC00" d="M0 7h12v1H0z"></path></svg> Leaflet</a> <span aria-hidden="true">|</span> © <a href="https://osm.org/copyright">OpenStreetMap</a> contributors</div></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>      
+        <br><button class="btn LBV-backbutton" onclick="callURL(&#39;kontaktdaten.php&#39;);"><span class="text-danger font-weight-bold">‹</span> zurück</button>
+      </div>
+<!--
+<div class="col col-md-3 help" id="help">
+  <button type="button" class="close" aria-label="Close" onclick="hide('help');jump('breadcrump');">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <p><b class=bluetext>Hilfe</b></p>
+  <span id="helpcontent">W&auml;hlen Sie hier einen Standort aus, bei dem Sie den Termin w&uuml;nschen.</span>
+</div>
+
+
+<div class="help" id="help">
+  <button type="button" class="close no-opacity" aria-label="Close" onclick="hide('help');jump('breadcrump');">
+  <span class="bluetext helpclose">Hilfefenster schließen&nbsp;</span><span aria-hidden="true" class="text-danger">&times;</span>
+  </button>
+  <p><b class=bluetext>&nbsp;</b></p>
+  <span id="helpcontent">W&auml;hlen Sie hier einen Standort aus, bei dem Sie den Termin w&uuml;nschen.</span>
+</div>
+
+-->
+  <!-- modal help dialog -->
+  <div class="modal fade" id="help" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered helpdialog" role="document">
+      <div class="modal-content helpcontent">
+        <div class="modal-header">
+          <button type="button" class="close no-opacity" data-dismiss="modal" aria-label="Close" onclick="jump(&#39;breadcrump&#39;);">
+          <span class="bluetext helpclose">Hilfefenster schließen&nbsp; </span><span aria-hidden="true" class="text-danger">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="helpcontent">
+          Wählen Sie hier einen Standort aus, bei dem Sie den Termin wünschen.          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- footer -->
+
+<footer>
+  <div class="container-fluid limit-width">
+    <nav class="navbar navbar-expand-lg pt-0 navbar-dark bg-lbv-blue text-white">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavFooter" aria-controls="navbarNavFooter" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavFooter">
+        <ul class="navbar-nav">
+          <li class="nav-item ">
+            <a class="nav-link  LBV-start-button nobreak " href="https://lbv-termine.de/frontend/kontakt.php" tabindex="0">Kontakt</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link  LBV-start-button nobreak " href="https://lbv-termine.de/frontend/hilfe.php" tabindex="0">Hilfe</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link  LBV-start-button nobreak " href="https://lbv-termine.de/frontend/datenschutz.php" tabindex="0">Datenschutzerklärung</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link LBV-start-button nobreak" href="https://lbv-termine.de/frontend/impressum.php" tabindex="0">Impressum</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav m-auto">
+          <li class="nav-item ">
+          <button class="LBV-footer-button">
+            <a class="nav-link LBV-start-button nobreak " href="https://lbv-termine.de/frontend/terminstorno.php" tabindex="0">Termin stornieren</a>
+          </button>
+          </li>
+          <li class="nav-item LBV-footer-right">
+            <a class="nav-link LBV-start-button nobreak " href="https://www.hamburg.de/lbv" target="_blank"><img src="./Standortauswahl und frühestmöglicher T333ermin_files/HHSP.svg" alt="Logo Hansestadt Hamburg" class="img-responsive"></a>
+          </li>
+        </ul>
+    </div></nav>
+  </div>
+</footer>
+
+
+
+<!-- use local storage for timing -->
+
+
+<a href="https://www.hamburg.de/lbv" target="_blank">
+  
+
+
+
+
+
+<script>
+  
+  setTimeout(function() {
+    var elems = document.getElementsByClassName("leaflet-marker-icon");
+    console.log(elems);
+    for (var i = 0; i < elems.length; ++i) {
+      elems[i].style.cursor = "default";
+    }
+  },3000);
+
+</script></a></body></html>

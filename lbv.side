@@ -1,0 +1,179 @@
+{
+  "id": "8c7f3856-01a6-4c05-98ed-20ad9cd760e3",
+  "version": "2.0",
+  "name": "lbv",
+  "url": "https://lbv-termine.de",
+  "tests": [{
+    "id": "5699c0b1-3fbe-4921-a337-4f7cd134ea10",
+    "name": "lbvv",
+    "commands": [{
+      "id": "6bd5d6ad-da17-4064-9425-796a0ed951be",
+      "comment": "",
+      "command": "open",
+      "target": "/frontend/index.php",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2a1f3e16-eac4-4ef9-9f53-108fec2b5ede",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1028",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "94c6af98-e7f3-460e-98af-920cb16fefc4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='frontendmodal']/div/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Verstanden und schließen')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9010b0c5-9788-41de-9267-07f42d4b9ba0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(3) > .col-12:nth-child(3) .btn",
+      "targets": [
+        ["css=.row:nth-child(3) > .col-12:nth-child(3) .btn", "css:finder"],
+        ["xpath=//button[@onclick=\"callURL('dienstleistungsauswahl.php?kategorieid=1');\"]", "xpath:attributes"],
+        ["xpath=//div[@id='content']/div/div[3]/div[3]/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div[3]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e06848cc-ec00-4c1d-82e3-6af388296fde",
+      "comment": "",
+      "command": "click",
+      "target": "css=#termin147 .btn",
+      "targets": [
+        ["css=#termin147 .btn", "css:finder"],
+        ["xpath=//button[@onclick=\"callURL('onlinedienstleistung.php?dienstleistungsid=147');\"]", "xpath:attributes"],
+        ["xpath=//div[@id='termin147']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[12]/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "21c372e6-62e6-41eb-8cee-245347d38607",
+      "comment": "",
+      "command": "click",
+      "target": "css=.LBV-choosebutton",
+      "targets": [
+        ["css=.LBV-choosebutton", "css:finder"],
+        ["xpath=//button[@onclick=\"callURL('datenschutzzustimmung.php');\"]", "xpath:attributes"],
+        ["xpath=//div[@id='content']/div/div/div/div[3]/div/button", "xpath:idRelative"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'weiter zur Terminvereinbarung')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0167a964-7150-4253-8a01-b6d6119bae35",
+      "comment": "",
+      "command": "click",
+      "target": "css=label",
+      "targets": [
+        ["css=label", "css:finder"],
+        ["xpath=//div[@id='content']/div/div/div/div[3]/form/p/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Ich habe die Datenschutzerklärung gelesen und stimme ihr zu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "29ca23bf-512d-461a-bf25-c448a8c6e03f",
+      "comment": "",
+      "command": "click",
+      "target": "id=weiterbutton",
+      "targets": [
+        ["id=weiterbutton", "id"],
+        ["css=#weiterbutton", "css:finder"],
+        ["xpath=//input[@id='weiterbutton']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/div/div/div/div[3]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "268708b6-6548-4f1e-9007-a67b01170d73",
+      "comment": "",
+      "command": "click",
+      "target": "id=vorname",
+      "targets": [
+        ["id=vorname", "id"],
+        ["name=vorname", "name"],
+        ["css=#vorname", "css:finder"],
+        ["xpath=//input[@id='vorname']", "xpath:attributes"],
+        ["xpath=//div[@id='privatperson']/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ccf86afb-fb41-410d-8aea-56a95f2f2960",
+      "comment": "",
+      "command": "type",
+      "target": "id=vorname",
+      "targets": [
+        ["id=vorname", "id"],
+        ["name=vorname", "name"],
+        ["css=#vorname", "css:finder"],
+        ["xpath=//input[@id='vorname']", "xpath:attributes"],
+        ["xpath=//div[@id='privatperson']/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": "Jass"
+    }, {
+      "id": "33bf356f-2e66-4c37-b163-e66d08f97a5c",
+      "comment": "",
+      "command": "type",
+      "target": "id=nachname",
+      "targets": [
+        ["id=nachname", "id"],
+        ["name=nachname", "name"],
+        ["css=#nachname", "css:finder"],
+        ["xpath=//input[@id='nachname']", "xpath:attributes"],
+        ["xpath=//div[@id='nachnamegroup']/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "Bass"
+    }, {
+      "id": "0a80f2d9-bbfe-43f4-9e77-f49667c282dd",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/div/div/div/div[3]/div/form/div[8]/input", "xpath:idRelative"],
+        ["xpath=//div[8]/input", "xpath:position"]
+      ],
+      "value": "Jasshard@gmail.com"
+    }, {
+      "id": "dc18242c-86e1-4df1-ac24-ea9f452837f8",
+      "comment": "",
+      "command": "click",
+      "target": "id=weiterbutton",
+      "targets": [
+        ["id=weiterbutton", "id"],
+        ["css=#weiterbutton", "css:finder"],
+        ["xpath=//input[@id='weiterbutton']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/div/div/div/div[3]/div/form/div[11]/input", "xpath:idRelative"],
+        ["xpath=//div[11]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "01bc4405-f810-4d2f-a06d-3b5b8d6ca8dc",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["5699c0b1-3fbe-4921-a337-4f7cd134ea10"]
+  }],
+  "urls": ["https://lbv-termine.de/"],
+  "plugins": []
+}
